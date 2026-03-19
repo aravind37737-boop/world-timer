@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everyday Tools — All you need, all in one place</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --surface2: #242320;
+    --surface3: #2e2c28;
+    --border: #3a3830;
+    --accent: #e8c97a;
+    --accent2: #7ac4e8;
+    --accent3: #e87a9a;
+    --accent4: #7ae8a0;
+    --text: #f0ede6;
+    --text2: #a09a8e;
+    --text3: #6a6560;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--text); }
+
+  .tagline {
+    font-size: 0.75rem;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 24px 40px 0;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 8px 18px;
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .tab:hover { border-color: var(--accent); color: var(--accent); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #0f0e0c; font-weight: 600; }
+
+  .panels { padding: 30px 40px 60px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.03em;
+  }
+
+  .panel-sub {
+    color: var(--text3);
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 12px;
+  }
+
+  input, textarea, select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+  .btn {
+    background: var(--accent);
+    color: #0f0e0c;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover { background: #f0d48a; transform: translateY(-1px); }
+  .btn.secondary {
+    background: var(--surface3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.danger { background: var(--accent3); color: #fff; }
+
+  .row { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  .col { flex: 1; min-width: 200px; }
+
+  .result-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    word-break: break-all;
+    min-height: 44px;
+    line-height: 1.6;
+  }
+
+  .result-box.large { font-size: 2rem; text-align: center; padding: 20px; letter-spacing: 0.02em; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 700px) {
+    header { padding: 16px 20px; }
+    .tabs { padding: 16px 20px 0; }
+    .panels { padding: 20px 20px 60px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .logo { font-size: 1.2rem; }
+    .tagline { display: none; }
+  }
+
+  /* CLOCK */
+  .clock-display {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4.5rem;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+    text-align: center;
+    padding: 30px 0 10px;
+  }
+
+  .clock-date {
+    text-align: center;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .tz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .tz-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .tz-name { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+  .tz-time { font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--accent2); }
+
+  /* COLOR PICKER */
+  .color-swatch {
+    width: 100%;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .color-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .chip {
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .chip:hover { transform: scale(1.15); border-color: var(--text); }
+
+  /* WORD COUNTER */
+  .stats-row {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px;
+  }
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    flex: 1; min-width: 90px;
+  }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 0.7rem; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* TODO */
+  .todo-list { list-style: none; }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: opacity 0.2s;
+  }
+  .todo-item.done { opacity: 0.45; }
+  .todo-item.done .todo-text { text-decoration: line-through; }
+  .todo-check {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .todo-check.checked { background: var(--accent4); border-color: var(--accent4); }
+  .todo-check.checked::after { content: '✓'; font-size: 11px; color: #0f0e0c; font-weight: 700; }
+  .todo-text { flex: 1; font-size: 0.9rem; }
+  .todo-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 1rem; padding: 2px 6px; border-radius: 4px; }
+  .todo-del:hover { color: var(--accent3); background: var(--surface3); }
+
+  /* BMI */
+  .bmi-result-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .bmi-bar-wrap {
+    background: var(--surface3);
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 16px;
+    position: relative;
+    overflow: visible;
+  }
+  .bmi-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent), var(--accent3));
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* UNIT CONVERTER */
+  .convert-result {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    padding: 16px 0 4px;
+    letter-spacing: -0.02em;
+  }
+
+  /* MOTIVATIONAL */
+  .quote-box {
+    padding: 30px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .quote-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* TIMER */
+  .timer-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 4rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-align: center;
+    padding: 20px 0;
+  }
+  .timer-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* HASH */
+  .hash-out {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    word-break: break-all;
+    line-height: 1.8;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .badge.green { background: #7ae8a022; color: var(--accent4); border: 1px solid #7ae8a044; }
+  .badge.yellow { background: #e8c97a22; color: var(--accent); border: 1px solid #e8c97a44; }
+  .badge.red { background: #e87a9a22; color: var(--accent3); border: 1px solid #e87a9a44; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  .note { font-size: 0.78rem; color: var(--text3); margin-top: 6px; line-height: 1.5; }
+
+  .copy-btn {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: var(--accent4); color: var(--accent4); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Everyday<span>Tools</span></div>
+  <div class="tagline">All you need · All in one place</div>
+</header>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-panel="clock">🕐 Clock</button>
+  <button class="tab" data-panel="todo">✅ To-Do</button>
+  <button class="tab" data-panel="timer">⏱ Timer</button>
+  <button class="tab" data-panel="words">📝 Text Tools</button>
+  <button class="tab" data-panel="converter">📐 Converter</button>
+  <button class="tab" data-panel="bmi">⚖️ BMI</button>
+  <button class="tab" data-panel="colors">🎨 Colors</button>
+  <button class="tab" data-panel="password">🔐 Password</button>
+  <button class="tab" data-panel="quote">✨ Quotes</button>
+  <button class="tab" data-panel="calc">🔢 Calculator</button>
+</div>
+
+<div class="panels">
+
+  <!-- CLOCK -->
+  <div class="panel active" id="panel-clock">
+    <div class="panel-title">World Clock</div>
+    <div class="panel-sub">current time · worldwide</div>
+    <div class="card">
+      <div class="clock-display" id="main-clock">00:00:00</div>
+      <div class="clock-date" id="main-date">—</div>
+      <div class="tz-grid" id="tz-grid"></div>
+    </div>
+  </div>
+
+  <!-- TODO -->
+  <div class="panel" id="panel-todo">
+    <div class="panel-title">To-Do List</div>
+    <div class="panel-sub">get things done</div>
+    <div class="card">
+      <div class="row">
+        <div class="col"><input type="text" id="todo-input" placeholder="Add a new task…" /></div>
+        <button class="btn" onclick="addTodo()">Add</button>
+      </div>
+      <div style="margin-top:6px;" class="note" id="todo-count"></div>
+    </div>
+    <ul class="todo-list" id="todo-list"></ul>
+  </div>
+
+  <!-- TIMER -->
+  <div class="panel" id="panel-timer">
+    <div class="panel-title">Timer & Stopwatch</div>
+    <div class="panel-sub">track every second</div>
+    <div class="card">
+      <div class="card-label">Stopwatch</div>
+      <div class="timer-display" id="sw-display">00:00.00</div>
+      <div class="timer-btns">
+        <button class="btn" id="sw-start" onclick="swToggle()">Start</button>
+        <button class="btn secondary" onclick="swReset()">Reset</button>
+        <button class="btn secondary" onclick="swLap()">Lap</button>
+      </div>
+      <div id="sw-laps" style="margin-top:12px; max-height:120px; overflow-y:auto;"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Countdown Timer</div>
+      <div class="row" style="align-items:center;">
+        <div class="col"><input type="number" id="cd-min" placeholder="Minutes" min="0" max="99" value="5" /></div>
+        <div class="col"><input type="number" id="cd-sec" placeholder="Seconds" min="0" max="59" value="0" /></div>
+      </div>
+      <div class="timer-display" id="cd-display" style="font-size:2.8rem;">05:00</div>
+      <div class="timer-btns">
+        <button class="btn" id="cd-start" onclick="cdToggle()">Start</button>
+        <button class="btn secondary" onclick="cdReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEXT TOOLS -->
+  <div class="panel" id="panel-words">
+    <div class="panel-title">Text Tools</div>
+    <div class="panel-sub">word count · case · encode</div>
+    <div class="card">
+      <div class="card-label">Your Text</div>
+      <textarea id="wc-text" placeholder="Paste or type your text here…" oninput="updateStats()"></textarea>
+      <div class="stats-row" id="stats-row">
+        <div class="stat-box"><div class="stat-num" id="s-words">0</div><div class="stat-label">Words</div></div>
+        <div class="stat-box"><div class="stat-num" id="s-chars">0</div><div class="stat-label">Chars</div></div>
+        <div class="stat-box"><div class="stat-num" id="s-chars-ns">0</div><div class="stat-label">No Spaces</div></div>
+        <div class="stat-box"><div class="stat-num" id="s-lines">0</div><div class="stat-label">Lines</div></div>
+        <div class="stat-box"><div class="stat-num" id="s-read">0</div><div class="stat-label">Min Read</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Transform Case</div>
+      <div class="row" style="flex-wrap:wrap; gap:8px;">
+        <button class="btn secondary" onclick="transformText('upper')">UPPER</button>
+        <button class="btn secondary" onclick="transformText('lower')">lower</button>
+        <button class="btn secondary" onclick="transformText('title')">Title Case</button>
+        <button class="btn secondary" onclick="transformText('sentence')">Sentence case</button>
+        <button class="btn secondary" onclick="transformText('reverse')">esreveR</button>
+        <button class="btn secondary" onclick="transformText('trim')">Trim Spaces</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Encode / Decode</div>
+      <div class="row">
+        <button class="btn secondary" onclick="encodeB64()">Base64 Encode</button>
+        <button class="btn secondary" onclick="decodeB64()">Base64 Decode</button>
+        <button class="btn secondary" onclick="urlEncode()">URL Encode</button>
+        <button class="btn secondary" onclick="urlDecode()">URL Decode</button>
+      </div>
+      <div style="margin-top:10px;" class="result-box hash-out" id="encode-result">—</div>
+    </div>
+  </div>
+
+  <!-- CONVERTER -->
+  <div class="panel" id="panel-converter">
+    <div class="panel-title">Unit Converter</div>
+    <div class="panel-sub">length · weight · temp · area · speed</div>
+    <div class="card">
+      <div class="row">
+        <div class="col">
+          <div class="card-label">Category</div>
+          <select id="conv-cat" onchange="updateConvUnits()">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temp">Temperature</option>
+            <option value="area">Area</option>
+            <option value="speed">Speed</option>
+            <option value="data">Data Storage</option>
+          </select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px;">
+        <div class="col">
+          <div class="card-label">Value</div>
+          <input type="number" id="conv-val" value="1" oninput="doConvert()" />
+        </div>
+        <div class="col">
+          <div class="card-label">From</div>
+          <select id="conv-from" onchange="doConvert()"></select>
+        </div>
+        <div class="col">
+          <div class="card-label">To</div>
+          <select id="conv-to" onchange="doConvert()"></select>
+        </div>
+      </div>
+      <div class="convert-result" id="conv-result">—</div>
+      <div class="note" id="conv-formula"></div>
+    </div>
+  </div>
+
+  <!-- BMI -->
+  <div class="panel" id="panel-bmi">
+    <div class="panel-title">BMI Calculator</div>
+    <div class="panel-sub">body mass index</div>
+    <div class="card">
+      <div class="row">
+        <div class="col">
+          <div class="card-label">Unit System</div>
+          <select id="bmi-unit" onchange="calcBMI()">
+            <option value="metric">Metric (kg, cm)</option>
+            <option value="imperial">Imperial (lbs, ft/in)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px;" id="bmi-fields">
+        <div class="col">
+          <div class="card-label">Weight (kg)</div>
+          <input type="number" id="bmi-weight" placeholder="70" oninput="calcBMI()" />
+        </div>
+        <div class="col">
+          <div class="card-label">Height (cm)</div>
+          <input type="number" id="bmi-height" placeholder="170" oninput="calcBMI()" />
+        </div>
+      </div>
+      <div style="margin-top:20px;" id="bmi-result-area" class="hidden"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">BMI Scale</div>
+      <div style="display:grid; gap:8px;">
+        <div class="row" style="align-items:center;"><span class="badge green" style="width:100px;">Under 18.5</span><span style="font-size:0.85rem; margin-left:8px; color:var(--text2);">Underweight</span></div>
+        <div class="row" style="align-items:center;"><span class="badge green" style="width:100px;">18.5 – 24.9</span><span style="font-size:0.85rem; margin-left:8px; color:var(--text2);">Normal weight</span></div>
+        <div class="row" style="align-items:center;"><span class="badge yellow" style="width:100px;">25 – 29.9</span><span style="font-size:0.85rem; margin-left:8px; color:var(--text2);">Overweight</span></div>
+        <div class="row" style="align-items:center;"><span class="badge red" style="width:100px;">30 and above</span><span style="font-size:0.85rem; margin-left:8px; color:var(--text2);">Obese</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLORS -->
+  <div class="panel" id="panel-colors">
+    <div class="panel-title">Color Picker</div>
+    <div class="panel-sub">hex · rgb · hsl · palette</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-label">Pick a Color</div>
+        <input type="color" id="color-input" value="#e8c97a" style="height:44px; padding:2px 4px; cursor:pointer;" oninput="updateColor()" />
+        <div class="color-swatch" id="color-swatch" style="background:#e8c97a; margin-top:12px;"></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Color Values</div>
+        <div style="display:grid; gap:10px;">
+          <div>
+            <div class="note" style="margin-bottom:4px;">HEX</div>
+            <div class="result-box" id="color-hex">#e8c97a</div>
+          </div>
+          <div>
+            <div class="note" style="margin-bottom:4px;">RGB</div>
+            <div class="result-box" id="color-rgb">rgb(232, 201, 122)</div>
+          </div>
+          <div>
+            <div class="note" style="margin-bottom:4px;">HSL</div>
+            <div class="result-box" id="color-hsl">hsl(43, 74%, 70%)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Complementary Palette</div>
+      <div class="color-chips" id="color-palette"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Preset Colors</div>
+      <div class="color-chips" id="preset-chips"></div>
+    </div>
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="panel" id="panel-password">
+    <div class="panel-title">Password Generator</div>
+    <div class="panel-sub">strong · random · secure</div>
+    <div class="card">
+      <div class="result-box" id="pw-output" style="font-family:'DM Mono',monospace; font-size:1rem; min-height:50px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <span id="pw-text">Click Generate</span>
+        <button class="copy-btn" id="pw-copy" onclick="copyPw()">Copy</button>
+      </div>
+      <div id="pw-strength-bar" style="height:4px; border-radius:2px; background:var(--surface3); margin-top:10px; overflow:hidden;">
+        <div id="pw-strength-fill" style="height:100%; width:0%; transition:all 0.3s; border-radius:2px;"></div>
+      </div>
+      <div class="note" id="pw-strength-label" style="margin-top:4px;"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Options</div>
+      <div class="row" style="align-items:center; margin-bottom:14px;">
+        <div style="flex:1;">
+          <div class="note" style="margin-bottom:4px;">Length: <b id="pw-len-val">16</b></div>
+          <input type="range" id="pw-len" min="6" max="64" value="16" style="width:100%; accent-color:var(--accent); height:4px; padding:0;" oninput="updatePwLen()" />
+        </div>
+      </div>
+      <div style="display:grid; gap:10px;">
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem;">
+          <input type="checkbox" id="pw-upper" checked style="accent-color:var(--accent); width:16px; height:16px;" /> Uppercase (A–Z)
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem;">
+          <input type="checkbox" id="pw-lower" checked style="accent-color:var(--accent); width:16px; height:16px;" /> Lowercase (a–z)
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem;">
+          <input type="checkbox" id="pw-nums" checked style="accent-color:var(--accent); width:16px; height:16px;" /> Numbers (0–9)
+        </label>
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:0.88rem;">
+          <input type="checkbox" id="pw-syms" checked style="accent-color:var(--accent); width:16px; height:16px;" /> Symbols (!@#$…)
+        </label>
+      </div>
+      <button class="btn" style="width:100%; margin-top:16px;" onclick="generatePw()">Generate Password</button>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="panel" id="panel-quote">
+    <div class="panel-title">Daily Motivation</div>
+    <div class="panel-sub">wisdom on demand</div>
+    <div id="quote-display" class="quote-box">
+      <div class="quote-text" id="q-text">Loading a quote for you…</div>
+      <div class="quote-author" id="q-author">—</div>
+    </div>
+    <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+      <button class="btn" onclick="newQuote()">New Quote</button>
+      <button class="btn secondary" onclick="copyQuote()">Copy Quote</button>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Category</div>
+      <div class="color-chips" style="gap:8px;">
+        <button class="tab active" id="qcat-all" onclick="setQCat('all',this)">All</button>
+        <button class="tab" onclick="setQCat('success',this)">Success</button>
+        <button class="tab" onclick="setQCat('wisdom',this)">Wisdom</button>
+        <button class="tab" onclick="setQCat('courage',this)">Courage</button>
+        <button class="tab" onclick="setQCat('focus',this)">Focus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="panel" id="panel-calc">
+    <div class="panel-title">Calculator</div>
+    <div class="panel-sub">arithmetic · fast · clean</div>
+    <div class="card" style="max-width:340px;">
+      <div id="calc-expression" style="font-family:'DM Mono',monospace; font-size:0.78rem; color:var(--text3); min-height:18px; text-align:right; margin-bottom:4px;"></div>
+      <div id="calc-display" style="font-family:'DM Serif Display',serif; font-size:2.8rem; letter-spacing:-0.03em; text-align:right; color:var(--accent); padding:8px 0 14px; word-break:break-all;">0</div>
+      <div id="calc-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =========== CLOCK ===========
+const TZS = [
+  {name:'🇮🇳 India (IST)', tz:'Asia/Kolkata', highlight: true},
+  {name:'🇺🇸 USA — New York (ET)', tz:'America/New_York', highlight: true},
+  {name:'🇺🇸 USA — Chicago (CT)', tz:'America/Chicago', highlight: true},
+  {name:'🇺🇸 USA — Los Angeles (PT)', tz:'America/Los_Angeles', highlight: true},
+  {name:'🇬🇧 UK — London (GMT/BST)', tz:'Europe/London', highlight: true},
+  {name:'🇦🇪 Dubai (GST)', tz:'Asia/Dubai'},
+  {name:'🇸🇬 Singapore (SGT)', tz:'Asia/Singapore'},
+  {name:'🇯🇵 Tokyo (JST)', tz:'Asia/Tokyo'},
+  {name:'🇦🇺 Sydney (AEDT)', tz:'Australia/Sydney'},
+  {name:'🇫🇷 Paris (CET)', tz:'Europe/Paris'},
+];
+const tzGrid = document.getElementById('tz-grid');
+TZS.forEach(t => {
+  const d = document.createElement('div');
+  d.className='tz-card';
+  d.id='tz-'+t.tz.replace(/\//g,'-');
+  if(t.highlight) d.style.cssText='border-color:var(--accent); background:linear-gradient(135deg,var(--surface2),var(--surface3));';
+  d.innerHTML=`<div class="tz-name" style="${t.highlight?'color:var(--accent);':''}">${t.name}</div><div class="tz-time" id="tzt-${t.tz.replace(/\//g,'-')}">—</div>`;
+  tzGrid.appendChild(d);
+});
+function updateClock(){
+  const now=new Date();
+  document.getElementById('main-clock').textContent=now.toLocaleTimeString('en-US',{hour12:false});
+  document.getElementById('main-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  TZS.forEach(t=>{
+    const el=document.getElementById('tzt-'+t.tz.replace(/\//g,'-'));
+    if(el) el.textContent=new Date().toLocaleTimeString('en-US',{timeZone:t.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  });
+}
+setInterval(updateClock,1000); updateClock();
+
+// =========== TODO ===========
+let todos = JSON.parse(localStorage.getItem('et-todos')||'[]');
+function saveTodos(){ localStorage.setItem('et-todos',JSON.stringify(todos)); }
+function renderTodos(){
+  const list=document.getElementById('todo-list'); list.innerHTML='';
+  todos.forEach((t,i)=>{
+    const li=document.createElement('li'); li.className='todo-item'+(t.done?' done':'');
+    li.innerHTML=`<div class="todo-check${t.done?' checked':''}" onclick="toggleTodo(${i})"></div>
+    <span class="todo-text">${t.text}</span>
+    <button class="todo-del" onclick="deleteTodo(${i})">✕</button>`;
+    list.appendChild(li);
+  });
+  const done=todos.filter(t=>t.done).length;
+  document.getElementById('todo-count').textContent=`${todos.length} tasks · ${done} done`;
+}
+function addTodo(){
+  const inp=document.getElementById('todo-input'); const v=inp.value.trim(); if(!v) return;
+  todos.push({text:v,done:false}); inp.value=''; saveTodos(); renderTodos();
+}
+function toggleTodo(i){ todos[i].done=!todos[i].done; saveTodos(); renderTodos(); }
+function deleteTodo(i){ todos.splice(i,1); saveTodos(); renderTodos(); }
+document.getElementById('todo-input').addEventListener('keydown',e=>{ if(e.key==='Enter') addTodo(); });
+renderTodos();
+
+// =========== STOPWATCH ===========
+let swRunning=false, swStart=0, swElapsed=0, swTimer=null, swLaps=[];
+function swTick(){
+  const now=Date.now(); const total=swElapsed+(now-swStart);
+  const ms=Math.floor((total%1000)/10).toString().padStart(2,'0');
+  const s=Math.floor(total/1000%60).toString().padStart(2,'0');
+  const m=Math.floor(total/60000).toString().padStart(2,'0');
+  document.getElementById('sw-display').textContent=`${m}:${s}.${ms}`;
+}
+function swToggle(){
+  if(swRunning){swElapsed+=Date.now()-swStart;clearInterval(swTimer);swRunning=false;document.getElementById('sw-start').textContent='Resume';}
+  else{swStart=Date.now();swTimer=setInterval(swTick,33);swRunning=true;document.getElementById('sw-start').textContent='Pause';}
+}
+function swReset(){clearInterval(swTimer);swRunning=false;swElapsed=0;swLaps=[];document.getElementById('sw-display').textContent='00:00.00';document.getElementById('sw-start').textContent='Start';document.getElementById('sw-laps').innerHTML='';}
+function swLap(){
+  if(!swRunning) return;
+  const total=swElapsed+(Date.now()-swStart);
+  const ms=Math.floor((total%1000)/10).toString().padStart(2,'0');
+  const s=Math.floor(total/1000%60).toString().padStart(2,'0');
+  const m=Math.floor(total/60000).toString().padStart(2,'0');
+  swLaps.push(`${m}:${s}.${ms}`);
+  const lapsEl=document.getElementById('sw-laps');
+  lapsEl.innerHTML=swLaps.map((l,i)=>`<div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text2);padding:3px 0;">Lap ${i+1}: ${l}</div>`).join('');
+  lapsEl.scrollTop=lapsEl.scrollHeight;
+}
+
+// =========== COUNTDOWN ===========
+let cdRunning=false,cdRemaining=300,cdTimer2=null;
+function cdDisplay(s){
+  const m=Math.floor(s/60).toString().padStart(2,'0');
+  const sec=(s%60).toString().padStart(2,'0');
+  document.getElementById('cd-display').textContent=`${m}:${sec}`;
+}
+function cdToggle(){
+  if(cdRunning){clearInterval(cdTimer2);cdRunning=false;document.getElementById('cd-start').textContent='Resume';}
+  else{
+    if(!cdRunning && !cdTimer2){
+      cdRemaining=parseInt(document.getElementById('cd-min').value||0)*60+parseInt(document.getElementById('cd-sec').value||0);
+    }
+    cdRunning=true;document.getElementById('cd-start').textContent='Pause';
+    cdTimer2=setInterval(()=>{
+      cdRemaining--; cdDisplay(cdRemaining);
+      if(cdRemaining<=0){clearInterval(cdTimer2);cdRunning=false;cdTimer2=null;document.getElementById('cd-display').textContent='Done!';document.getElementById('cd-start').textContent='Start';}
+    },1000);
+  }
+}
+function cdReset(){clearInterval(cdTimer2);cdRunning=false;cdTimer2=null;document.getElementById('cd-start').textContent='Start';
+  const m=parseInt(document.getElementById('cd-min').value||5);const s=parseInt(document.getElementById('cd-sec').value||0);cdDisplay(m*60+s);}
+document.getElementById('cd-min').addEventListener('input',cdReset);
+document.getElementById('cd-sec').addEventListener('input',cdReset);
+cdDisplay(300);
+
+// =========== TEXT TOOLS ===========
+function updateStats(){
+  const t=document.getElementById('wc-text').value;
+  const words=t.trim()===''?0:t.trim().split(/\s+/).length;
+  document.getElementById('s-words').textContent=words;
+  document.getElementById('s-chars').textContent=t.length;
+  document.getElementById('s-chars-ns').textContent=t.replace(/\s/g,'').length;
+  document.getElementById('s-lines').textContent=t===''?0:t.split('\n').length;
+  document.getElementById('s-read').textContent=Math.ceil(words/200)||0;
+}
+function transformText(type){
+  const el=document.getElementById('wc-text'); let t=el.value;
+  if(type==='upper') t=t.toUpperCase();
+  else if(type==='lower') t=t.toLowerCase();
+  else if(type==='title') t=t.replace(/\w\S*/g,s=>s.charAt(0).toUpperCase()+s.slice(1).toLowerCase());
+  else if(type==='sentence') t=t.charAt(0).toUpperCase()+t.slice(1).toLowerCase();
+  else if(type==='reverse') t=t.split('').reverse().join('');
+  else if(type==='trim') t=t.replace(/[ \t]+/g,' ').trim();
+  el.value=t; updateStats();
+}
+function encodeB64(){ try{ document.getElementById('encode-result').textContent=btoa(unescape(encodeURIComponent(document.getElementById('wc-text').value))); } catch(e){ document.getElementById('encode-result').textContent='Error: '+e.message; }}
+function decodeB64(){ try{ document.getElementById('encode-result').textContent=decodeURIComponent(escape(atob(document.getElementById('wc-text').value))); } catch(e){ document.getElementById('encode-result').textContent='Error: invalid Base64'; }}
+function urlEncode(){ document.getElementById('encode-result').textContent=encodeURIComponent(document.getElementById('wc-text').value); }
+function urlDecode(){ try{ document.getElementById('encode-result').textContent=decodeURIComponent(document.getElementById('wc-text').value); } catch(e){ document.getElementById('encode-result').textContent='Error: invalid URL encoding'; }}
+
+// =========== CONVERTER ===========
+const convData={
+  length:{units:{m:1,km:0.001,cm:100,mm:1000,ft:3.28084,in:39.3701,mi:0.000621371,yd:1.09361}},
+  weight:{units:{kg:1,g:1000,lb:2.20462,oz:35.274,ton:0.001}},
+  temp:{units:{C:1,F:1,K:1}},
+  area:{units:{'m²':1,'km²':0.000001,'cm²':10000,'ft²':10.7639,'ac':0.000247,'ha':0.0001}},
+  speed:{units:{'m/s':1,'km/h':3.6,'mph':2.23694,'knot':1.94384}},
+  data:{units:{B:1,KB:0.000977,MB:9.54e-7,GB:9.31e-10,TB:9.09e-13,bit:8}},
+};
+function updateConvUnits(){
+  const cat=document.getElementById('conv-cat').value;
+  const from=document.getElementById('conv-from'), to=document.getElementById('conv-to');
+  from.innerHTML=''; to.innerHTML='';
+  const units=Object.keys(convData[cat].units);
+  units.forEach(u=>{ from.innerHTML+=`<option value="${u}">${u}</option>`; to.innerHTML+=`<option value="${u}">${u}</option>`; });
+  to.selectedIndex=1; doConvert();
+}
+function doConvert(){
+  const cat=document.getElementById('conv-cat').value;
+  const val=parseFloat(document.getElementById('conv-val').value);
+  const from=document.getElementById('conv-from').value;
+  const to=document.getElementById('conv-to').value;
+  if(isNaN(val)){document.getElementById('conv-result').textContent='—'; return;}
+  let result;
+  if(cat==='temp'){
+    let c;
+    if(from==='C') c=val; else if(from==='F') c=(val-32)/1.8; else c=val-273.15;
+    if(to==='C') result=c; else if(to==='F') result=c*1.8+32; else result=c+273.15;
+  } else {
+    const u=convData[cat].units;
+    result=(val/u[from])*u[to];
+  }
+  const fmt=Math.abs(result)>=10000||Math.abs(result)<0.001?result.toExponential(4):parseFloat(result.toPrecision(7));
+  document.getElementById('conv-result').textContent=`${fmt} ${to}`;
+  document.getElementById('conv-formula').textContent=`${val} ${from} = ${fmt} ${to}`;
+}
+updateConvUnits();
+
+// =========== BMI ===========
+function calcBMI(){
+  const unit=document.getElementById('bmi-unit').value;
+  let w=parseFloat(document.getElementById('bmi-weight').value);
+  let h=parseFloat(document.getElementById('bmi-height').value);
+  if(isNaN(w)||isNaN(h)||h===0){ document.getElementById('bmi-result-area').innerHTML=''; return; }
+  let bmi;
+  if(unit==='metric'){ bmi=w/((h/100)**2); }
+  else { bmi=703*w/(h**2); } // imperial: lbs, inches
+  bmi=Math.round(bmi*10)/10;
+  let cat, col;
+  if(bmi<18.5){ cat='Underweight'; col='var(--accent2)'; }
+  else if(bmi<25){ cat='Normal Weight'; col='var(--accent4)'; }
+  else if(bmi<30){ cat='Overweight'; col='var(--accent)'; }
+  else { cat='Obese'; col='var(--accent3)'; }
+  const pct=Math.min((bmi/40)*100,100);
+  document.getElementById('bmi-result-area').innerHTML=`
+    <div class="bmi-result-num" style="color:${col}">${bmi}</div>
+    <div style="margin-top:4px; color:${col}; font-size:0.9rem; font-weight:600;">${cat}</div>
+    <div class="bmi-bar-wrap"><div class="bmi-bar-fill" style="width:${pct}%"></div></div>
+  `;
+}
+
+// =========== COLORS ===========
+function hexToRgb(h){ const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16); return {r,g,b}; }
+function rgbToHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  const max=Math.max(r,g,b),min=Math.min(r,g,b); let h,s,l=(max+min)/2;
+  if(max===min){h=s=0;}else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+    switch(max){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;case b:h=(r-g)/d+4;break;}h/=6;}
+  return{h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)};
+}
+function genPalette(hex){
+  const {r,g,b}=hexToRgb(hex);
+  const compl=`#${(255-r).toString(16).padStart(2,'0')}${(255-g).toString(16).padStart(2,'0')}${(255-b).toString(16).padStart(2,'0')}`;
+  return [hex,compl,
+    `#${Math.min(r+50,255).toString(16).padStart(2,'0')}${Math.min(g+50,255).toString(16).padStart(2,'0')}${Math.min(b+50,255).toString(16).padStart(2,'0')}`,
+    `#${Math.max(r-50,0).toString(16).padStart(2,'0')}${Math.max(g-50,0).toString(16).padStart(2,'0')}${Math.max(b-50,0).toString(16).padStart(2,'0')}`,
+    `#${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}${r.toString(16).padStart(2,'0')}`,
+    `#${b.toString(16).padStart(2,'0')}${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}`
+  ];
+}
+function updateColor(){
+  const h=document.getElementById('color-input').value;
+  document.getElementById('color-swatch').style.background=h;
+  document.getElementById('color-hex').textContent=h.toUpperCase();
+  const {r,g,b}=hexToRgb(h);
+  document.getElementById('color-rgb').textContent=`rgb(${r}, ${g}, ${b})`;
+  const {h:hh,s,l}=rgbToHsl(r,g,b);
+  document.getElementById('color-hsl').textContent=`hsl(${hh}, ${s}%, ${l}%)`;
+  const palette=genPalette(h);
+  document.getElementById('color-palette').innerHTML=palette.map(c=>`<div class="chip" style="background:${c}" title="${c}" onclick="document.getElementById('color-input').value='${c}'; updateColor()"></div>`).join('');
+}
+const PRESETS=['#e8c97a','#7ac4e8','#e87a9a','#7ae8a0','#a87ae8','#e8a07a','#7ae8d4','#e8e87a','#e87a7a','#7a9ae8','#e8c4a0','#a0c4e8'];
+document.getElementById('preset-chips').innerHTML=PRESETS.map(c=>`<div class="chip" style="background:${c}" onclick="document.getElementById('color-input').value='${c}'; updateColor()"></div>`).join('');
+updateColor();
+
+// =========== PASSWORD ===========
+function updatePwLen(){ document.getElementById('pw-len-val').textContent=document.getElementById('pw-len').value; }
+function generatePw(){
+  const len=parseInt(document.getElementById('pw-len').value);
+  const upper='ABCDEFGHIJKLMNOPQRSTUVWXYZ', lower='abcdefghijklmnopqrstuvwxyz', nums='0123456789', syms='!@#$%^&*()-_=+[]{}|;:,.<>?';
+  let chars='';
+  if(document.getElementById('pw-upper').checked) chars+=upper;
+  if(document.getElementById('pw-lower').checked) chars+=lower;
+  if(document.getElementById('pw-nums').checked) chars+=nums;
+  if(document.getElementById('pw-syms').checked) chars+=syms;
+  if(!chars){ document.getElementById('pw-text').textContent='Select at least one type'; return; }
+  let pw='';
+  for(let i=0;i<len;i++) pw+=chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('pw-text').textContent=pw;
+  // strength
+  let strength=0;
+  if(pw.match(/[A-Z]/)) strength++;
+  if(pw.match(/[a-z]/)) strength++;
+  if(pw.match(/[0-9]/)) strength++;
+  if(pw.match(/[^A-Za-z0-9]/)) strength++;
+  if(len>=16) strength++;
+  const labels=['Very Weak','Weak','Fair','Strong','Very Strong'];
+  const colors=['#e87a7a','#e8a07a','#e8c97a','#a0c4e8','#7ae8a0'];
+  document.getElementById('pw-strength-fill').style.width=(strength/5*100)+'%';
+  document.getElementById('pw-strength-fill').style.background=colors[strength-1]||colors[0];
+  document.getElementById('pw-strength-label').textContent='Strength: '+(labels[strength-1]||'Very Weak');
+  document.getElementById('pw-copy').classList.remove('copied');
+}
+function copyPw(){
+  const pw=document.getElementById('pw-text').textContent;
+  navigator.clipboard.writeText(pw).then(()=>{ const b=document.getElementById('pw-copy'); b.textContent='Copied!'; b.classList.add('copied'); setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied');},2000); });
+}
+generatePw();
+
+// =========== QUOTES ===========
+const quotes={
+  all:[
+    {text:"The only way to do great work is to love what you do.",author:"Steve Jobs"},
+    {text:"In the middle of every difficulty lies opportunity.",author:"Albert Einstein"},
+    {text:"It does not matter how slowly you go as long as you do not stop.",author:"Confucius"},
+    {text:"Life is what happens when you're busy making other plans.",author:"John Lennon"},
+    {text:"The future belongs to those who believe in the beauty of their dreams.",author:"Eleanor Roosevelt"},
+    {text:"Strive not to be a success, but rather to be of value.",author:"Albert Einstein"},
+    {text:"The mind is everything. What you think you become.",author:"Buddha"},
+    {text:"An unexamined life is not worth living.",author:"Socrates"},
+  ],
+  success:[
+    {text:"Success is not final, failure is not fatal: it is the courage to continue that counts.",author:"Winston Churchill"},
+    {text:"Coming together is a beginning; keeping together is progress; working together is success.",author:"Henry Ford"},
+    {text:"Success usually comes to those who are too busy to be looking for it.",author:"Henry David Thoreau"},
+  ],
+  wisdom:[
+    {text:"The only true wisdom is in knowing you know nothing.",author:"Socrates"},
+    {text:"Yesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present.",author:"Bill Keane"},
+    {text:"Knowing yourself is the beginning of all wisdom.",author:"Aristotle"},
+  ],
+  courage:[
+    {text:"Courage is not the absence of fear, but rather the assessment that something else is more important.",author:"Franklin D. Roosevelt"},
+    {text:"You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",author:"Eleanor Roosevelt"},
+    {text:"It takes courage to grow up and become who you really are.",author:"E. E. Cummings"},
+  ],
+  focus:[
+    {text:"The successful warrior is the average man, with laser-like focus.",author:"Bruce Lee"},
+    {text:"Concentrate all your thoughts upon the work at hand. The sun's rays do not burn until brought to a focus.",author:"Alexander Graham Bell"},
+    {text:"My success, part of it certainly, is that I have focused in on a few things.",author:"Bill Gates"},
+  ],
+};
+let qCat='all';
+function setQCat(cat, btn){
+  qCat=cat;
+  document.querySelectorAll('#panel-quote .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  newQuote();
+}
+function newQuote(){
+  const pool=quotes[qCat]||quotes.all;
+  const q=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('q-text').textContent='"'+q.text+'"';
+  document.getElementById('q-author').textContent='— '+q.author;
+}
+function copyQuote(){
+  const text=document.getElementById('q-text').textContent+' '+document.getElementById('q-author').textContent;
+  navigator.clipboard.writeText(text);
+}
+newQuote();
+
+// =========== CALCULATOR ===========
+const calcButtons=[
+  ['C','±','%','÷'],
+  ['7','8','9','×'],
+  ['4','5','6','−'],
+  ['1','2','3','+'],
+  ['0','.','⌫','='],
+];
+let calcExpr='', calcDisplay='0', calcJustEvaled=false;
+const calcGrid=document.getElementById('calc-grid');
+calcButtons.forEach(row=>{
+  row.forEach(b=>{
+    const btn=document.createElement('button');
+    btn.textContent=b;
+    const isOp=['÷','×','−','+','='].includes(b);
+    const isSpec=['C','±','%'].includes(b);
+    btn.style.cssText=`padding:16px;border-radius:10px;border:1px solid var(--border);background:${b==='='?'var(--accent)':isOp?'var(--surface3)':'var(--surface2)'};color:${b==='='?'#0f0e0c':isOp?'var(--accent)':'var(--text)'};font-family:'DM Mono',monospace;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.15s;${b==='0'?'grid-column:span 1;':''}`;
+    btn.addEventListener('mouseover',()=>{ btn.style.opacity='0.8'; });
+    btn.addEventListener('mouseout',()=>{ btn.style.opacity='1'; });
+    btn.addEventListener('click',()=>handleCalc(b));
+    calcGrid.appendChild(btn);
+  });
+});
+function handleCalc(b){
+  const disp=document.getElementById('calc-display');
+  const expr=document.getElementById('calc-expression');
+  if(b==='C'){ calcExpr=''; calcDisplay='0'; calcJustEvaled=false; }
+  else if(b==='⌫'){ calcDisplay=calcDisplay.length>1?calcDisplay.slice(0,-1):'0'; }
+  else if(b==='±'){ calcDisplay=(parseFloat(calcDisplay)*-1).toString(); }
+  else if(b==='%'){ calcDisplay=(parseFloat(calcDisplay)/100).toString(); }
+  else if(['÷','×','−','+'].includes(b)){
+    const opMap={'÷':'/','×':'*','−':'-','+':'+'};
+    calcExpr=calcDisplay+' '+b+' '; calcJustEvaled=false;
+  }
+  else if(b==='='){
+    const opMap={'÷':'/','×':'*','−':'-','+':'+'};
+    try{
+      const safeExpr=calcExpr.replace('÷','/').replace('×','*').replace('−','-');
+      const result=Function('"use strict";return ('+safeExpr+calcDisplay+')')();
+      expr.textContent=calcExpr+calcDisplay+' =';
+      calcDisplay=parseFloat(result.toPrecision(12)).toString();
+      calcExpr=''; calcJustEvaled=true;
+    }catch(e){ calcDisplay='Error'; }
+  }
+  else {
+    if(calcJustEvaled){ calcDisplay=b; calcJustEvaled=false; }
+    else calcDisplay=calcDisplay==='0'?b:calcDisplay+b;
+  }
+  disp.textContent=calcDisplay;
+  if(b!=='=') expr.textContent=calcExpr;
+}
+
+// =========== TABS ===========
+document.querySelectorAll('.tab[data-panel]').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab[data-panel]').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+tab.dataset.panel).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
